@@ -1,0 +1,1 @@
+- [AgriMarket build compatibility](initial-build-lessons.md) — keep generated numeric schemas compatible with Zod and preserve the root React Query provider.

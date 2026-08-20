@@ -1,6 +1,6 @@
-# [Project name]
+# AgriMarket
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+AgriMarket connects buyers with local farmers for fresh produce, transparent market context, and direct farm-to-buyer workflows.
 
 ## Run & Operate
 
@@ -22,15 +22,21 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `artifacts/agri-market/src/App.tsx` — routed frontend and shared marketplace/dashboard surfaces
+- `artifacts/agri-market/src/index.css` — AgriMarket theme tokens and typography
+- `artifacts/api-server/src/routes/marketplace.ts` — typed demo marketplace API responses
+- `lib/api-spec/openapi.yaml` — source-of-truth API contract
+- `lib/api-client-react/src/generated/` — generated React Query client
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- The first release uses typed API-backed demo data with graceful client fallbacks so the product remains previewable before persistence/auth providers are connected.
+- Cart state is intentionally client-local for the first release and is structured for later replacement by a server-backed cart service.
+- Market price content is explicitly presented as sample/demo intelligence rather than live market data.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+The app includes public marketplace discovery, product and farmer detail pages, market price intelligence, buyer cart/checkout/order flows, farmer dashboard/listing/analytics/messaging/assistant surfaces, and an admin overview.
 
 ## User preferences
 
