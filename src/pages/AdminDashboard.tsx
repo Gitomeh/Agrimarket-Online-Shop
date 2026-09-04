@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
-import { useLocation } from 'wouter';
 import { mockFarmers } from '../data/mockData';
 import { Farmer } from '../types';
 import { 
@@ -18,7 +17,6 @@ import {
 
 export function AdminDashboard() {
   const { isAdmin, logout } = useAdmin();
-  const [, navigate] = useLocation();
   const [farmers, setFarmers] = useState<Farmer[]>(mockFarmers);
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
   const [showAddModal, setShowAddModal] = useState(false);

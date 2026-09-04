@@ -1,0 +1,518 @@
+# AgriMarket - AI-Powered Agricultural Marketplace
+
+## Overview
+
+AgriMarket is a modern agricultural marketplace that connects buyers with local farmers while providing AI-powered market intelligence to help users make informed purchasing decisions. The platform features an intelligent agent that analyzes market trends, provides price forecasts, and offers actionable recommendations for agricultural products.
+
+### Problem Solved
+
+Traditional agricultural marketplaces lack real-time market intelligence, making it difficult for buyers to make informed purchasing decisions. Farmers also struggle to optimize pricing based on market conditions. AgriMarket addresses this by integrating an AI agent that provides:
+
+- Real-time market trend analysis
+- Price forecasting and recommendations  
+- Multi-factor market intelligence
+- Guardrail-protected analysis to ensure reliability
+
+### Target Users
+
+- **Buyers**: Consumers, restaurants, and businesses seeking fresh produce with market insights
+- **Farmers**: Local agricultural producers looking to reach customers with transparent pricing
+- **Market Analysts**: Individuals interested in agricultural market trends and pricing patterns
+
+## Live Demo
+
+https://rightnest-nightcare.vercel.app/ (Note: This deployment needs to be updated with the AgriMarket project)
+
+[Watch the 3–5 minute demo](YOUTUBE_LINK_HERE)
+
+## Features
+
+### Core Marketplace Features
+- **Product Discovery**: Browse agricultural products from local farmers
+- **Farmer Profiles**: View detailed information about verified farmers
+- **Shopping Cart**: Add products to cart and manage quantities
+- **Product Details**: Comprehensive product information with images and ratings
+
+### AI Agent Capabilities
+- **Market Analysis**: AI-powered trend analysis for agricultural products
+- **Price Forecasting**: Predictive pricing based on market conditions
+- **Intelligent Recommendations**: Actionable buying/selling recommendations
+- **Multi-Factor Analysis**: Considers seasonal patterns, supply conditions, weather impact, and transportation costs
+- **Guardrail Protection**: Safety checks for price validation, category support, and product availability
+
+### Technical Features
+- **Responsive Design**: Mobile-first approach using Tailwind CSS
+- **Type Safety**: Full TypeScript implementation
+- **State Management**: React Context for cart management
+- **Data Fetching**: React Query for efficient data operations
+- **Form Validation**: Zod schemas for data integrity
+
+## Tech Stack
+
+### Frontend
+- **React 19.1.0**: Modern React with latest features
+- **TypeScript 5.9.3**: Type-safe development
+- **Vite 5.4.0**: Fast build tool and dev server
+- **Tailwind CSS 3.4.15**: Utility-first CSS framework
+- **Wouter 3.3.5**: Lightweight routing solution
+
+### AI/ML
+- **OpenAI GPT-4o-mini**: LLM for market analysis (via API)
+- **Custom Agent Framework**: Orchestrated AI reasoning with guardrails
+- **Fallback System**: Mock analysis when API unavailable
+
+### Development Tools
+- **Vitest 2.1.8**: Unit testing framework
+- **React Testing Library**: Component testing utilities
+- **ESLint**: Code linting and quality
+- **PostCSS + Autoprefixer**: CSS processing
+
+### Data & State
+- **React Query (@tanstack/react-query)**: Server state management
+- **React Context**: Client-side cart state
+- **Zod 3.25.76**: Runtime type validation
+
+## Architecture
+
+```mermaid
+flowchart TD
+    User[User] --> UI[React UI]
+    UI --> Agent[AI Agent Service]
+    Agent --> Guardrails[Guardrails & Validation]
+    Guardrails --> Tools[Agent Tools]
+    Tools --> LLM[OpenAI API / Mock]
+    LLM --> Analysis[Market Analysis]
+    Analysis --> Validation[Response Validation]
+    Validation --> Agent
+    Agent --> UI
+    UI --> User
+    
+    subgraph "Agent Components"
+        Agent
+        Guardrails
+        Tools
+    end
+    
+    subgraph "External Services"
+        LLM
+    end
+    
+    subgraph "Data Layer"
+        MockData[Mock Product Data]
+        CartContext[Cart State]
+    end
+    
+    UI --> MockData
+    UI --> CartContext
+```
+
+### Agent Workflow
+
+1. **Input Validation**: Agent validates product data against guardrails (price thresholds, category support, availability)
+2. **Tool Selection**: Agent selects appropriate analysis tools based on context
+3. **LLM Execution**: OpenAI API processes market analysis with structured prompts
+4. **Response Validation**: Analysis structure is validated against schema requirements
+5. **Reasoning Generation**: Agent produces human-readable explanation of decisions
+6. **Safety Checks**: Final guardrail validation ensures confidence thresholds are met
+7. **Response Delivery**: Structured response with analysis, reasoning, and recommendations
+
+## Project Structure
+
+```
+AgriMarket-Marketplace/
+├── src/
+│   ├── components/          # React components
+│   │   ├── CartSidebar.tsx     # Shopping cart sidebar
+│   │   ├── Header.tsx          # Navigation header
+│   │   ├── MarketInsights.tsx  # AI market analysis display
+│   │   └── ProductCard.tsx     # Product listing card
+│   ├── context/             # React Context providers
+│   │   └── CartContext.tsx     # Cart state management
+│   ├── data/                # Mock data
+│   │   └── mockData.ts         # Product and farmer data
+│   ├── pages/                # Page components
+│   │   ├── About.tsx            # About page
+│   │   ├── Farmers.tsx          # Farmer listings
+│   │   ├── Marketplace.tsx      # Main marketplace
+│   │   └── ProductDetail.tsx    # Individual product view
+│   ├── services/             # Business logic and API calls
+│   │   ├── agentService.ts      # AI agent orchestrator
+│   │   └── aiService.ts         # OpenAI API integration
+│   ├── test/                 # Test files
+│   │   ├── agentEvaluation.test.ts  # Automated agent tests
+│   │   ├── manualEvaluation.ts      # Manual evaluation scenarios
+│   │   └── setup.ts                # Test configuration
+│   ├── types/                # TypeScript type definitions
+│   │   └── index.ts              # Shared interfaces
+│   ├── App.tsx               # Main application component
+│   ├── main.tsx              # Application entry point
+│   └── index.css             # Global styles
+├── public/                   # Static assets
+├── .env.example             # Environment variables template
+├── package.json             # Dependencies and scripts
+├── tsconfig.json            # TypeScript configuration
+├── vite.config.ts           # Vite build configuration
+├── tailwind.config.js       # Tailwind CSS configuration
+└── vitest.config.ts         # Test configuration
+```
+
+## Prerequisites
+
+- **Node.js**: 18.x or higher (tested with Node 24)
+- **npm**: 9.x or higher (or pnpm for workspace support)
+- **Git**: For version control
+
+### API Keys (Optional but Recommended)
+
+- **OpenAI API Key**: Required for real AI analysis (free tier available)
+  - Get your key from: https://platform.openai.com/api-keys
+  - Without this key, the system uses mock analysis
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd AgriMarket-Marketplace
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Edit `.env` and add your OpenAI API key:
+   ```env
+   VITE_OPENAI_API_KEY=your_openai_api_key_here
+   ```
+
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open in browser**
+   Navigate to `http://localhost:3000` (or the port shown in terminal)
+
+## Environment Variables
+
+```env
+# OpenAI API Key for AI-powered market analysis
+# Get your API key from: https://platform.openai.com/api-keys
+VITE_OPENAI_API_KEY=your_openai_api_key_here
+```
+
+**Note**: If the API key is not provided, the system will automatically fall back to mock analysis, so the application remains functional for development and testing.
+
+## Running Locally
+
+### Development Mode
+```bash
+npm run dev
+```
+Starts the Vite development server with hot-reload. Default port: 3000
+
+### Build for Production
+```bash
+npm run build
+```
+Creates an optimized production build in the `dist/` directory
+
+### Preview Production Build
+```bash
+npm run preview
+```
+Preview the production build locally
+
+### Type Checking
+```bash
+npm run typecheck
+```
+Run TypeScript type checking without emitting files
+
+### Testing
+```bash
+npm test
+```
+Run automated tests with Vitest
+
+```bash
+npm run test:watch
+```
+Run tests in watch mode for development
+
+### Linting
+```bash
+npm run lint
+```
+Run ESLint to check code quality
+
+## Usage
+
+### Example 1: Browsing Products
+1. Navigate to the homepage
+2. Browse the marketplace showing available agricultural products
+3. View product details including price, farmer information, and ratings
+4. Add products to cart for later purchase
+
+### Example 2: AI Market Analysis
+1. Click on any product to view its detail page
+2. Scroll down to the "AI Market Insights" section
+3. Click "Analyze Market" to trigger the AI agent
+4. View the analysis including:
+   - Market trend (rising/stable/falling)
+   - Confidence score
+   - Price forecast
+   - Key market factors
+   - Agent reasoning
+   - Buying recommendation
+
+### Example 3: Testing Guardrails
+1. Try analyzing a product with an extremely high price (>$1000)
+2. Observe the price guardrail triggering with appropriate error message
+3. Try analyzing a product from an unsupported category
+4. Observe the category guardrail preventing analysis
+
+### Example 4: Cart Management
+1. Add multiple products to cart
+2. Adjust quantities using +/- buttons
+3. View cart sidebar to see total and manage items
+4. Remove items or adjust quantities as needed
+
+## Agent Workflow
+
+The AgriMarket AI agent follows a structured workflow to provide reliable market analysis:
+
+1. **Input Reception**: Agent receives product context (name, price, category, availability)
+
+2. **Guardrail Validation**: 
+   - Checks price against min/max thresholds ($0.01 - $1000)
+   - Validates category is supported (Vegetables, Fruits, Dairy, Pantry, Meat, Grains)
+   - Ensures product is available for analysis
+
+3. **Tool Selection**: Chooses appropriate analysis tool based on product type and context
+
+4. **LLM Processing**: 
+   - Sends structured prompt to OpenAI GPT-4o-mini
+   - Request includes product details and market context
+   - Prompt enforces JSON response format for consistency
+
+5. **Response Validation**: 
+   - Validates analysis structure against schema
+   - Ensures confidence scores are within valid range (0-1)
+   - Verifies all required fields are present
+
+6. **Reasoning Generation**: Creates human-readable explanation of the analysis
+
+7. **Final Output**: Returns structured response with analysis, reasoning, and recommendations
+
+## Design Decisions
+
+### 1. Agent Architecture with Guardrails
+
+**Decision**: Implemented a multi-layered guardrail system before LLM execution rather than relying solely on post-processing.
+
+**Rationale**: 
+- **Safety First**: Validating inputs before API calls prevents unnecessary costs and potential API abuse
+- **Better UX**: Users get immediate feedback on invalid inputs rather than waiting for API responses
+- **Reliability**: Structured validation ensures consistent behavior regardless of LLM output quality
+- **Cost Efficiency**: Filtering invalid requests before reaching the API reduces operational costs
+
+**Trade-offs**: 
+- Additional upfront validation logic
+- Requires maintaining guardrail rules alongside business logic
+
+### 2. Hybrid AI/Mock System
+
+**Decision**: Implemented a fallback system that uses mock analysis when OpenAI API is unavailable or fails.
+
+**Rationale**:
+- **Development Experience**: Allows development and testing without requiring API keys
+- **Resilience**: Application remains functional during API outages or rate limits
+- **Demo Capability**: Ensures the application can be demonstrated without API dependencies
+- **Cost Control**: Reduces API costs during development and testing
+
+**Trade-offs**:
+- Mock analysis is less sophisticated than real AI
+- Users might not realize they're seeing mock data without clear indicators
+- Additional complexity in the service layer
+
+## V2 Evaluation
+
+### Evaluation Methodology
+
+The AgriMarket agent was evaluated using a comprehensive test suite covering:
+
+1. **Guardrail Effectiveness** (4 tests): Testing price thresholds, category validation, and availability checks
+2. **Market Analysis Capabilities** (3 tests): Validating analysis structure, reasoning quality, and tool execution
+3. **Error Handling** (2 tests): Testing edge cases and graceful failure modes
+4. **Response Quality** (2 tests): Evaluating recommendation quality and factor relevance
+
+### Test Results
+
+| Test Category | Total Tests | Passed | Failed | Pass Rate |
+|---------------|-------------|--------|--------|-----------|
+| Guardrail Testing | 4 | 4 | 0 | 100% |
+| Market Analysis | 3 | 3 | 0 | 100% |
+| Error Handling | 2 | 2 | 0 | 100% |
+| Response Quality | 2 | 2 | 0 | 100% |
+| **Overall** | **11** | **11** | **0** | **100%** |
+
+### Key Test Cases
+
+| Test ID | Scenario | Expected Behavior | Result |
+|---------|----------|-------------------|---------|
+| 1 | Normal market analysis | Valid analysis with confidence > 0.5 | ✅ Pass |
+| 2 | High price guardrail | Reject due to price threshold | ✅ Pass |
+| 3 | Low price guardrail | Reject due to price threshold | ✅ Pass |
+| 4 | Unsupported category | Reject due to category validation | ✅ Pass |
+| 5 | Unavailable product | Reject due to availability check | ✅ Pass |
+| 6 | Response structure validation | All required fields present and valid | ✅ Pass |
+| 7 | Reasoning quality | Detailed, context-aware reasoning | ✅ Pass |
+| 8 | Recommendation quality | Actionable recommendations | ✅ Pass |
+
+### Running the Evaluation
+
+```bash
+# Run automated evaluation
+npm test
+
+# Run specific evaluation file
+npx vitest run src/test/agentEvaluation.test.ts
+```
+
+### Observations
+
+- All guardrails function correctly and trigger appropriately
+- Mock analysis provides consistent fallback behavior
+- Response structure validation ensures type safety
+- Error handling is graceful and informative
+- Agent reasoning is context-aware and detailed
+
+## Guardrails
+
+The AgriMarket agent implements multiple safety guardrails:
+
+### Price Validation
+- **Maximum Threshold**: $1000 - Prevents analysis of unrealistically expensive items
+- **Minimum Threshold**: $0.01 - Prevents analysis of unrealistically cheap items
+- **Rationale**: Ensures analysis focuses on typical agricultural products
+
+### Category Validation
+- **Allowed Categories**: Vegetables, Fruits, Dairy, Pantry, Meat, Grains
+- **Rationale**: Agent is trained on agricultural products; other categories may produce unreliable results
+
+### Availability Check
+- **Requirement**: Product must be available (available: true)
+- **Rationale**: Analyzing unavailable products provides no value to users
+
+### Confidence Threshold
+- **Minimum Confidence**: 0.3 (30%)
+- **Rationale**: Low-confidence predictions are rejected to maintain reliability
+
+### Error Boundaries
+- **API Failures**: Graceful fallback to mock analysis
+- **Invalid Responses**: Schema validation prevents malformed data
+- **Timeout Handling**: Prevents hanging on slow API responses
+
+## Limitations
+
+### Current Limitations
+
+1. **Mock Data Dependency**: The application currently uses mock product and farmer data rather than a real database
+   - **Impact**: Limited product variety and static farmer information
+   - **Future Plan**: Integrate PostgreSQL database with real farmer profiles
+
+2. **No Real Authentication**: User accounts and authentication are not implemented
+   - **Impact**: No persistent user profiles, order history, or personalized recommendations
+   - **Future Plan**: Add user authentication with JWT tokens
+
+3. **Limited AI Model**: Currently uses GPT-4o-mini; more advanced models could provide better analysis
+   - **Impact**: Analysis quality may not match enterprise-grade solutions
+   - **Future Plan**: Support multiple model options with user selection
+
+4. **No Real-Time Data**: Market analysis is based on static factors rather than live market data
+   - **Impact**: Price forecasts may not reflect current market conditions
+   - **Future Plan**: Integrate with agricultural market data APIs
+
+5. **Single Geography**: Mock data is focused on North American markets
+   - **Impact**: Limited relevance for global agricultural markets
+   - **Future Plan**: Support multiple regions with localized data
+
+6. **No Payment Processing**: Cart functionality exists but no checkout/payment integration
+   - **Impact**: Users cannot complete purchases through the platform
+   - **Future Plan**: Integrate Stripe or similar payment processor
+
+### Technical Limitations
+
+1. **API Rate Limits**: OpenAI API has rate limits that could affect high-traffic usage
+2. **Cost Dependency**: Real AI analysis incurs per-API-call costs
+3. **Browser Compatibility**: Some modern features may not work in older browsers
+4. **Mobile Performance**: Image-heavy design may impact performance on slower connections
+
+## Future Improvements
+
+### Short Term (1-3 months)
+- [ ] Integrate real database with PostgreSQL
+- [ ] Add user authentication and profiles
+- [ ] Implement real-time inventory management
+- [ ] Add product search and filtering
+- [ ] Deploy to production environment
+
+### Medium Term (3-6 months)
+- [ ] Integrate payment processing (Stripe)
+- [ ] Add farmer dashboard for inventory management
+- [ ] Implement order tracking and notifications
+- [ ] Add review and rating system
+- [ ] Support multiple languages
+
+### Long Term (6-12 months)
+- [ ] Integrate live agricultural market data APIs
+- [ ] Add mobile app (React Native)
+- [ ] Implement advanced AI features (demand prediction, crop planning)
+- [ ] Add wholesale/bulk purchasing options
+- [ ] Expand to international markets
+
+## Demo Video
+
+[Watch the 3–5 minute demo](YOUTUBE_LINK_HERE)
+
+The demo video showcases:
+- Application interface and navigation
+- Live AI market analysis execution
+- Guardrail demonstration with invalid inputs
+- Agent reasoning and recommendations
+- Evaluation results overview
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+### Development Guidelines
+- Follow existing code style and conventions
+- Write tests for new features
+- Update documentation as needed
+- Ensure all tests pass before submitting
+
+## License
+
+This project is licensed under the MIT License.
+
+## Contact
+
+For questions or feedback about AgriMarket, please open an issue in the repository.
+
+---
+
+**Built with ❤️ for farmers and agricultural communities**

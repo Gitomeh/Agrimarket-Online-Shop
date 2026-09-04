@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
-import { useLocation } from 'wouter';
 import { Lock, User as UserIcon, AlertCircle } from 'lucide-react';
 
 export function AdminLogin() {
@@ -8,7 +7,6 @@ export function AdminLogin() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const { login } = useAdmin();
-  const [, navigate] = useLocation();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
